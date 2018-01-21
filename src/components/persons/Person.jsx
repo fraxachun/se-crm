@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Person = ({ person }) => (
-  <p>
-    {person.firstname} {person.lastname} ({person.email})
-  </p>
-);
+import { ListItem, ListItemText } from 'material-ui/List';
+
+const Person = ({ person }) => {
+  let name = '-';
+  if (person.firstname || person.lastname) {
+    name = `${person.firstname} ${person.lastname}`;
+  }
+  return (
+    <ListItem>
+      <ListItemText primary={name} secondary={person.email} />
+    </ListItem>
+  );
+};
 
 Person.propTypes = {
   person: PropTypes.shape({

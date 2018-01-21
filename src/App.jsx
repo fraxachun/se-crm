@@ -1,25 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+// eslint-disable-next-line import/extensions
+import 'typeface-roboto';
+import { MuiThemeProvider } from 'material-ui/styles';
+import Reboot from 'material-ui/Reboot';
+import AppBar from './components/AppBar';
+import Tabs from './components/Tabs';
 
-import './index.css';
-import logo from './logo.svg';
-import './App.css';
 import configureStore from './store';
-import Persons from './components/persons';
 
 const App = (config = {}) => {
   const initialState = {};
   const store = configureStore(initialState, config);
   return (
     <Provider store={store}>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <Persons />
-      </div>
+      <MuiThemeProvider>
+        <Reboot />
+        <AppBar />
+        <Tabs />
+      </MuiThemeProvider>
     </Provider>
   );
 };
