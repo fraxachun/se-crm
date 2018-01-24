@@ -1,9 +1,9 @@
 
 import { createReducer } from 'redux-act';
-import { fetchPersons, savePerson, editPerson } from './actions';
+import { fetchPersons, savePerson, showPerson, editPerson, showList } from './actions';
 
 const defaultState = {
-  status: null,
+  status: '',
   currentPersonId: null,
   data: [],
   error: null,
@@ -23,41 +23,51 @@ const updatePersonInArray = (persons, person) =>
 export default createReducer({
   [fetchPersons.request]: state => ({
     ...state,
-    status: 'loading',
+    status: 'loadList',
   }),
   [fetchPersons.ok]: (state, payload) => ({
     ...state,
-    status: 'loaded',
+    status: 'showList',
     data: payload.response,
   }),
   [fetchPersons.error]: (state, payload) => ({
     ...state,
-    status: 'error',
+    status: 'errorList',
     data: [],
     error: payload.error,
   }),
   [fetchPersons.reset]: () => (defaultState),
+  [showList]: state => ({
+    ...state,
+    status: 'showList',
+    currentPersonId: null,
+  }),
+  [showPerson]: (state, personId) => ({
+    ...state,
+    status: 'showPerson',
+    currentPersonId: personId || state.currentPersonId,
+  }),
+  [editPerson]: (state, personId) => ({
+    ...state,
+    status: 'editPerson',
+    currentPersonId: personId || state.currentPersonId,
+  }),
   [savePerson.request]: (state, payload) => ({
     ...state,
     currentPersonId: payload.id,
-    status: 'saving',
+    status: 'savePerson',
   }),
   [savePerson.ok]: (state, payload) => ({
     ...state,
-    status: 'saved',
+    status: 'showList',
     currentPersonId: payload.response.id,
     data: updatePersonInArray(state.data, payload.response),
   }),
-  [fetchPersons.error]: (state, payload) => ({
+  [savePerson.error]: (state, payload) => ({
     ...state,
-    status: 'error',
+    status: 'errorPerson',
     data: [],
     error: payload.error,
   }),
-  [editPerson]: (state, payload) => ({
-    ...state,
-    status: payload ? 'editing' : 'loaded',
-    currentPersonId: payload,
-  }),
-  [fetchPersons.reset]: () => (defaultState),
+  [savePerson.reset]: () => (defaultState),
 }, defaultState);

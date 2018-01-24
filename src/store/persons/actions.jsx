@@ -16,10 +16,16 @@ const savePerson = createActionAsync(
     .then(res => res.data),
 );
 
+const showList = createAction('showList');
+
+const showPerson = createAction('showPerson');
+
 const editPerson = createAction('editPerson');
 
 export {
   fetchPersons,
+  showList,
+  showPerson,
   editPerson,
   savePerson,
 };
