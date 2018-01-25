@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
-import Tabs, { Tab } from 'material-ui/Tabs';
+import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
+import RestoreIcon from 'material-ui-icons/Restore';
+import PersonIcon from 'material-ui-icons/Person';
+import LocationOnIcon from 'material-ui-icons/Domain';
 
 import Persons from './persons';
 
@@ -18,18 +21,21 @@ class AppTabs extends Component {
 
     return (
       <div>
-        <Tabs
+        <div style={{ height: 'calc(100vh - 104px)', overflow: 'auto', marginTop: 56 }}>
+          {value === 0 && <div>todo</div>}
+          {value === 1 && <Persons />}
+          {value === 2 && <div>todo</div>}
+        </div>
+        <BottomNavigation
           value={value}
           onChange={this.handleChange}
-          fullWidth
+          showLabels
+          style={{ position: 'fixed', bottom: 0, width: '100%' }}
         >
-          <Tab label="Ereignisse" />
-          <Tab label="Personen" />
-          <Tab label="Kindergärten" />
-        </Tabs>
-        {value === 0 && <div>todo</div>}
-        {value === 1 && <Persons />}
-        {value === 2 && <div>todo</div>}
+          <BottomNavigationAction label="Ereignisse" icon={<RestoreIcon />} />
+          <BottomNavigationAction label="Personen" icon={<PersonIcon />} />
+          <BottomNavigationAction label="Kindergärten" icon={<LocationOnIcon />} />
+        </BottomNavigation>
       </div>
     );
   }

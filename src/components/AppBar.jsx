@@ -5,7 +5,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
 export default () => (
-  <AppBar position="static">
+  <AppBar position="fixed">
     <Toolbar>
       <Typography type="title" color="inherit">
         Spürnasenecke CRM

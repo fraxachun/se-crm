@@ -21,7 +21,7 @@ class PersonsList extends Component {
     }
 
     return (
-      <List style={{ height: 'calc(100vh - 112px)', overflow: 'auto' }}>
+      <List>
         {persons.map(person => (
           <ListItem key={person.id} onClick={this.handleClick(person.id)}>
             <ListItemText primary={person.name} secondary={person.email} />
