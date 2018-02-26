@@ -12,6 +12,7 @@ import Delete from 'material-ui-icons/Delete';
 
 import PropTypes from './PropTypes';
 import { editPerson as editPersonAction, showList as showListAction } from '../../store/persons/actions';
+import Comments from '../comments/List';
 
 const EditPerson = ({ person, showList, editPerson }) => (
   <Dialog fullScreen open>
@@ -32,6 +33,12 @@ const EditPerson = ({ person, showList, editPerson }) => (
       <CardHeader title={person.name} />
       <CardContent>
         {person.email}
+      </CardContent>
+    </Card>
+    <Card>
+      <CardHeader title="CRM" />
+      <CardContent>
+        <Comments personId={person.id} />
       </CardContent>
     </Card>
   </Dialog>

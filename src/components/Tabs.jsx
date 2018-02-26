@@ -6,10 +6,11 @@ import PersonIcon from 'material-ui-icons/Person';
 import LocationOnIcon from 'material-ui-icons/Domain';
 
 import Persons from './persons';
+import Comments from './comments/List';
 
 class AppTabs extends Component {
   state = {
-    value: 1,
+    value: 0,
   };
 
   handleChange = (event, value) => {
@@ -22,7 +23,7 @@ class AppTabs extends Component {
     return (
       <div>
         <div style={{ height: 'calc(100vh - 104px)', overflow: 'auto', marginTop: 56 }}>
-          {value === 0 && <div>todo</div>}
+          {value === 0 && <Comments />}
           {value === 1 && <Persons />}
           {value === 2 && <div>todo</div>}
         </div>
