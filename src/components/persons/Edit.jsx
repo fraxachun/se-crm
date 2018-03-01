@@ -40,15 +40,15 @@ class EditPerson extends Component {
 
     return (
       <Dialog fullScreen open>
-        <AppBar position="static">
+        <AppBar position="static" color="secondary">
           <Toolbar>
-            <IconButton color="contrast" onClick={showList} aria-label="Schließen">
+            <IconButton color="inherit" onClick={showList} aria-label="Schließen">
               <CloseIcon />
             </IconButton>
             <Typography type="title" color="inherit">
               {person.name}
             </Typography>
-            <Button color="contrast" type="submit" form="edit-person-form">
+            <Button color="inherit" type="submit" form="edit-person-form">
               save
             </Button>
           </Toolbar>

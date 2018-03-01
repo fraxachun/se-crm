@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography';
 export default () => (
   <AppBar position="fixed">
     <Toolbar>
-      <Typography type="title" color="inherit">
+      <Typography variant="title" color="inherit">
         Spürnasenecke CRM
       </Typography>
     </Toolbar>
