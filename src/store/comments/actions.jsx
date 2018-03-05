@@ -1,5 +1,7 @@
 import { createActionAsync } from 'redux-act-async';
 import httpClient from '../httpClient';
+import fetchLocations from '../locations/actions';
+import { fetchPersons } from '../persons/actions';
 
 const fetchComments = createActionAsync(
   'fetchComments',
@@ -25,6 +27,8 @@ const addComment = createActionAsync(
     ok: {
       callback: (dispatch, getState) => {
         dispatch(fetchComments(getState().comments.comments.request));
+        dispatch(fetchPersons());
+        dispatch(fetchLocations());
       },
     },
   },
