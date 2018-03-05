@@ -21,14 +21,13 @@ const Comment = ({
     date, comment, user_name: user, location_name: location, person_name: person,
   },
 }) => {
-  let title = '';
-  if (person) title = person;
-  if (location) {
-    if (title) {
-      title += ` (${location})`;
-    } else {
-      title = location;
-    }
+  let title = <div />;
+  if (person && location) {
+    title = <div>{person} (<i>{location}</i>)</div>;
+  } else if (person) {
+    title = <div>{person}</div>;
+  } else if (location) {
+    title = <div><i>{location}</i></div>;
   }
   const words = user.split(' ');
   const avatar = words[0].substr(0, 1) + words[1].substr(0, 1);
