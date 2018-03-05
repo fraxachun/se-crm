@@ -10,7 +10,7 @@ import Comments from './comments/List';
 
 class AppTabs extends Component {
   state = {
-    value: 0,
+    value: 1,
   };
 
   handleChange = (event, value) => {

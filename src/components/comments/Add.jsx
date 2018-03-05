@@ -9,6 +9,8 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import { addComment as addCommentAction } from '../../store/comments/actions';
+import PersonPropTypes from '../persons/PropTypes';
 
 class AddComment extends Component {
   state = {
@@ -22,7 +24,14 @@ class AddComment extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.addComment(this.state);
+    const values = {
+      comment: this.state.comment,
+    };
+    if (this.props.person) {
+      values.person_id = this.props.person.id;
+    }
+    this.props.addComment(values);
+    this.props.handleClose();
   };
 
   render() {
@@ -52,13 +61,17 @@ class AddComment extends Component {
 }
 
 AddComment.propTypes = {
+  person: PropTypes.shape(PersonPropTypes.propTypes),
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
 };
+AddComment.defaultProps = {
+  person: null,
+};
 
 const mapDispatchToProps = dispatch => ({
-  addComment: (values) => { console.log(values); },
+  addComment: (values) => { dispatch(addCommentAction(values)); },
 });
 
 export default connect(null, mapDispatchToProps)(AddComment);

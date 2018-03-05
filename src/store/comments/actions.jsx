@@ -14,4 +14,21 @@ const fetchComments = createActionAsync(
   },
 );
 
-export default fetchComments;
+const addComment = createActionAsync(
+  'addComment',
+  params => httpClient
+    .post('/comments', params)
+    .then(res => res.data),
+  {
+    ok: {
+      callback: (dispatch, getState) => {
+        dispatch(fetchComments(getState().comments.comments.request));
+      },
+    },
+  },
+);
+
+export {
+  fetchComments,
+  addComment,
+};

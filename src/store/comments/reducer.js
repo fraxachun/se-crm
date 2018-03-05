@@ -1,5 +1,9 @@
 
 import { createReducerAsync } from 'redux-act-async';
-import fetchComments from './actions';
+import { combineReducers } from 'redux';
+import { fetchComments, addComment } from './actions';
 
-export default createReducerAsync(fetchComments);
+export default combineReducers({
+  comments: createReducerAsync(fetchComments),
+  addComment: createReducerAsync(addComment),
+});

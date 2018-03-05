@@ -43,7 +43,7 @@ const EditPerson = ({ person, showList, editPerson }) => (
         </Button>
       </CardActions>
     </Card>
-    <Comments personId={person.id} />
+    <Comments person={person} />
   </Dialog>
 );
 

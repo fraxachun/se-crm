@@ -10,8 +10,9 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 
-import fetchCommentsAction from '../../store/comments/actions';
+import { fetchComments as fetchCommentsAction } from '../../store/comments/actions';
 import CommentPropTypes from './PropTypes';
+import PersonPropTypes from '../persons/PropTypes';
 import AddComment from './Add';
 
 const Comment = ({
@@ -68,7 +69,11 @@ class Comments extends Component {
     };
   }
   componentDidMount() {
-    this.props.fetchComments({ personId: this.props.personId });
+    const params = {};
+    if (this.props.person) {
+      params.personId = this.props.person.id;
+    }
+    this.props.fetchComments(params);
   }
   handleClick = (event) => {
     event.preventDefault();
@@ -81,7 +86,6 @@ class Comments extends Component {
       showDialog: false,
     });
   }
-
   render() {
     const { loading, comments } = this.props;
     if (loading) {
@@ -96,7 +100,11 @@ class Comments extends Component {
     };
     return (
       <div>
-        <AddComment open={this.state.showDialog} handleClose={this.hideDialog} />
+        <AddComment
+          open={this.state.showDialog}
+          handleClose={this.hideDialog}
+          person={this.props.person}
+        />
         {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
         <Button variant="fab" color="secondary" style={style} onClick={this.handleClick}>
           <AddIcon />
@@ -107,19 +115,19 @@ class Comments extends Component {
 }
 
 Comments.propTypes = {
-  personId: PropTypes.number,
+  person: PropTypes.shape(PersonPropTypes.propTypes),
   comments: PropTypes.arrayOf(PropTypes.shape(CommentPropTypes.propTypes)),
   loading: PropTypes.bool.isRequired,
   fetchComments: PropTypes.func.isRequired,
 };
 Comments.defaultProps = {
-  personId: null,
+  person: null,
   comments: [],
 };
 
 const mapStateToProps = state => ({
-  comments: state.comments.data ? state.comments.data : [],
-  loading: state.comments.loading,
+  comments: state.comments.comments.data ? state.comments.comments.data : [],
+  loading: state.comments.comments.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
