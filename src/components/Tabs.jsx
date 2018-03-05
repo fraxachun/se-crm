@@ -7,6 +7,7 @@ import LocationOnIcon from 'material-ui-icons/Domain';
 
 import Persons from './persons';
 import Comments from './comments/List';
+import Locations from './locations';
 
 class AppTabs extends Component {
   state = {
@@ -25,7 +26,7 @@ class AppTabs extends Component {
         <div style={{ height: 'calc(100vh - 104px)', overflow: 'auto', marginTop: 56 }}>
           {value === 0 && <Comments />}
           {value === 1 && <Persons />}
-          {value === 2 && <div>todo</div>}
+          {value === 2 && <Locations />}
         </div>
         <BottomNavigation
           value={value}

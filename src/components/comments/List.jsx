@@ -13,6 +13,7 @@ import AddIcon from 'material-ui-icons/Add';
 import { fetchComments as fetchCommentsAction } from '../../store/comments/actions';
 import CommentPropTypes from './PropTypes';
 import PersonPropTypes from '../persons/PropTypes';
+import LocationPropTypes from '../locations/PropTypes';
 import AddComment from './Add';
 
 const Comment = ({
@@ -73,6 +74,9 @@ class Comments extends Component {
     if (this.props.person) {
       params.personId = this.props.person.id;
     }
+    if (this.props.location) {
+      params.locationId = this.props.location.id;
+    }
     this.props.fetchComments(params);
   }
   handleClick = (event) => {
@@ -116,12 +120,14 @@ class Comments extends Component {
 
 Comments.propTypes = {
   person: PropTypes.shape(PersonPropTypes.propTypes),
+  location: PropTypes.shape(LocationPropTypes.propTypes),
   comments: PropTypes.arrayOf(PropTypes.shape(CommentPropTypes.propTypes)),
   loading: PropTypes.bool.isRequired,
   fetchComments: PropTypes.func.isRequired,
 };
 Comments.defaultProps = {
   person: null,
+  location: null,
   comments: [],
 };
 

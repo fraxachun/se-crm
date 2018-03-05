@@ -7,6 +7,8 @@ const fetchComments = createActionAsync(
     let path = '/comments';
     if (params.personId) {
       path += `?personId=${params.personId}`;
+    } else if (params.locationId) {
+      path += `?locationId=${params.locationId}`;
     }
     return httpClient
       .get(path)
