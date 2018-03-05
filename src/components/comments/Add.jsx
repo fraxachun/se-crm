@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { addComment as addCommentAction } from '../../store/comments/actions';
 import PersonPropTypes from '../persons/PropTypes';
+import LocationPropTypes from '../locations/PropTypes';
 
 class AddComment extends Component {
   state = {
@@ -29,6 +30,9 @@ class AddComment extends Component {
     };
     if (this.props.person) {
       values.person_id = this.props.person.id;
+    }
+    if (this.props.location) {
+      values.location_id = this.props.location.id;
     }
     this.props.addComment(values);
     this.props.handleClose();
@@ -62,12 +66,14 @@ class AddComment extends Component {
 
 AddComment.propTypes = {
   person: PropTypes.shape(PersonPropTypes.propTypes),
+  location: PropTypes.shape(LocationPropTypes.propTypes),
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   addComment: PropTypes.func.isRequired,
 };
 AddComment.defaultProps = {
   person: null,
+  location: null,
 };
 
 const mapDispatchToProps = dispatch => ({

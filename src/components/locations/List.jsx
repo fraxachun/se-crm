@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import List, { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
 
 import LocationPropTypes from './PropTypes';
 import Show from './Show';
@@ -40,6 +41,9 @@ class LocationsList extends Component {
       <List>
         {locations.map(location => (
           <ListItem key={location.id}>
+            <ListItemAvatar>
+              <Avatar>{location.comments_count}</Avatar>
+            </ListItemAvatar>
             <ListItemText
               primary={location.name}
               secondary={location.email}

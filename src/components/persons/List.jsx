@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import List, { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import TextField from 'material-ui/TextField';
@@ -73,6 +74,9 @@ class PersonsList extends Component {
         <List style={{ height: 'calc(100vh - 176px)', overflow: 'auto', marginTop: 60 }}>
           {persons.map(person => (
             <ListItem key={person.id} onClick={this.handleClick(person.id)}>
+              <ListItemAvatar>
+                <Avatar>{person.comments_count}</Avatar>
+              </ListItemAvatar>
               <ListItemText primary={person.name} secondary={person.email} />
             </ListItem>
           ))}

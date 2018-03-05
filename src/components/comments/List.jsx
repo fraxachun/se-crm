@@ -108,6 +108,7 @@ class Comments extends Component {
           open={this.state.showDialog}
           handleClose={this.hideDialog}
           person={this.props.person}
+          location={this.props.location}
         />
         {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
         <Button variant="fab" color="secondary" style={style} onClick={this.handleClick}>
