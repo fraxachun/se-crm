@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Card, { CardHeader, CardContent } from 'material-ui/Card';
+import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
-import Dialog from 'material-ui/Dialog';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import IconButton from 'material-ui/IconButton';
-import Typography from 'material-ui/Typography';
-import CloseIcon from 'material-ui-icons/Close';
 import Button from 'material-ui/Button';
 
 import PropTypes from './PropTypes';
-import { savePerson as savePersonAction, showList as showListAction } from '../../store/persons/actions';
+import { savePerson as savePersonAction } from '../../store/persons/actions';
+import Dialog from '../Dialog';
 
 class EditPerson extends Component {
   constructor(props) {
@@ -25,66 +20,52 @@ class EditPerson extends Component {
       [name]: event.target.value,
     });
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    this.props.savePerson(this.state);
+  handleSubmit = () => {
+    this.props.savePerson(this.props.person, this.state);
+    this.props.handleClose();
   }
 
   render() {
-    const person = this.state;
-    const { status, showList } = this.props;
-
-    if (status === 'savePerson') {
-      return <div>Saving...</div>;
-    }
+    const { person, handleClose } = this.props;
 
     return (
-      <Dialog fullScreen open>
-        <AppBar position="static" color="secondary">
-          <Toolbar>
-            <IconButton color="inherit" onClick={showList} aria-label="Schließen">
-              <CloseIcon />
-            </IconButton>
-            <Typography type="title" color="inherit">
-              {person.name}
-            </Typography>
-            <Button color="inherit" type="submit" form="edit-person-form">
-              save
-            </Button>
-          </Toolbar>
-        </AppBar>
+      <Dialog title={person.name} handleClose={handleClose}>
         <Card>
           <CardHeader title={person.name} />
           <CardContent>
-            <form
-              noValidate
-              autoComplete="off"
-              id="edit-person-form"
-              onSubmit={this.handleSubmit}
-            >
-              <TextField
-                id="firstname"
-                label="Vorname"
-                value={this.state.firstname}
-                onChange={this.handleChange('firstname')}
-                margin="normal"
-              />
-              <TextField
-                id="lastname"
-                label="Nachname"
-                value={this.state.lastname}
-                onChange={this.handleChange('lastname')}
-                margin="normal"
-              />
-              <TextField
-                id="email"
-                label="E-Mail"
-                value={this.state.email}
-                onChange={this.handleChange('email')}
-                margin="normal"
-              />
-            </form>
+            <TextField
+              id="firstname"
+              label="Vorname"
+              value={this.state.firstname}
+              onChange={this.handleChange('firstname')}
+              margin="normal"
+            />
+            <TextField
+              id="lastname"
+              label="Nachname"
+              value={this.state.lastname}
+              onChange={this.handleChange('lastname')}
+              margin="normal"
+            />
+            <TextField
+              id="email"
+              label="E-Mail"
+              value={this.state.email}
+              onChange={this.handleChange('email')}
+              margin="normal"
+            />
           </CardContent>
+          <CardActions>
+            <Button
+              size="small"
+              color="secondary"
+              style={{ marginLeft: 'auto' }}
+              onClick={this.handleSubmit}
+            >
+              Speichern
+            </Button>
+          </CardActions>
+
         </Card>
       </Dialog>
     );
@@ -94,14 +75,8 @@ class EditPerson extends Component {
 EditPerson.propTypes = PropTypes.propTypes;
 EditPerson.defaultProps = PropTypes.defaultProps;
 
-const mapStateToProps = state => ({
-  person: state.persons.data.find(person => state.persons.currentPersonId === person.id),
-  status: state.persons.status,
-});
-
 const mapDispatchToProps = dispatch => ({
-  savePerson: values => dispatch(savePersonAction(values)),
-  showList: () => dispatch(showListAction()),
+  savePerson: (person, values) => dispatch(savePersonAction(person, values)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditPerson);
+export default connect(null, mapDispatchToProps)(EditPerson);

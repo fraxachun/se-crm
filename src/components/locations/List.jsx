@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import List, { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List';
+import Card, { CardHeader, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
+import Button from 'material-ui/Button';
 
 import LocationPropTypes from './PropTypes';
-import Show from './Show';
+import ShowLocation from './Show';
 
 class LocationsList extends Component {
   state = {
@@ -27,10 +28,6 @@ class LocationsList extends Component {
     const { locations, loading } = this.props;
     const { currentLocation } = this.state;
 
-    if (currentLocation) {
-      return <Show location={currentLocation} handleClose={this.handleClose} />;
-    }
-
     if (loading || !locations) {
       return (
         <div>Loading...</div>
@@ -38,20 +35,30 @@ class LocationsList extends Component {
     }
 
     return (
-      <List>
+      <div>
+        {currentLocation &&
+          <ShowLocation location={currentLocation} handleClose={this.handleClose} />
+        }
         {locations.map(location => (
-          <ListItem key={location.id}>
-            <ListItemAvatar>
-              <Avatar>{location.comments_count}</Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary={location.name}
-              secondary={location.email}
-              onClick={this.handleClick(location)}
+          <Card key={location.id}>
+            <CardHeader
+              avatar={<Avatar>{location.comments_count}</Avatar>}
+              title={location.name}
+              subheader={location.email}
             />
-          </ListItem>
+            <CardActions>
+              <Button
+                size="small"
+                color="primary"
+                style={{ marginLeft: 'auto' }}
+                onClick={this.handleClick(location)}
+              >
+                Kommentare
+              </Button>
+            </CardActions>
+          </Card>
         ))}
-      </List>
+      </div>
     );
   }
 }

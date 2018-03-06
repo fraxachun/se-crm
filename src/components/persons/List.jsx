@@ -2,23 +2,34 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import List, { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List';
+import Card, { CardHeader, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
+import Button from 'material-ui/Button';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import TextField from 'material-ui/TextField';
 
+import EditPerson from './Edit';
+import ShowPerson from './Show';
 import PersonPropTypes from './PropTypes';
-import { showPerson as showPersonAction } from '../../store/persons/actions';
+import getPersonName from '../util';
 
 class PersonsList extends Component {
   state = {
     order: 'email',
     search: '',
+    editPerson: null,
+    showPerson: null,
   };
 
-  handleClick = personId => () =>
-    this.props.showPerson(personId);
+  handleEdit = person => () =>
+    this.setState({ editPerson: person });
+
+  handleShow = person => () =>
+    this.setState({ showPerson: person });
+
+  handleClose = () =>
+    this.setState({ editPerson: null, showPerson: null });
 
   handleOrder = event =>
     this.setState({ order: event.target.value });
@@ -27,23 +38,27 @@ class PersonsList extends Component {
     this.setState({ search: event.target.value });
 
   render() {
-    const { status } = this.props;
+    const { loading } = this.props;
     let { persons } = this.props;
+    const {
+      order, search, editPerson, showPerson,
+    } = this.state;
+
     persons.sort((a, b) => {
-      const v1 = a[this.state.order].toLowerCase();
-      const v2 = b[this.state.order].toLowerCase();
+      const v1 = a[order].toLowerCase();
+      const v2 = b[order].toLowerCase();
       if (v1 < v2) return -1;
       if (v1 > v2) return 1;
       if (a.email.toLowerCase() < b.email.toLowerCase()) return -1;
       if (a.email.toLowerCase() > b.email.toLowerCase()) return 1;
       return 0;
     });
-    if (this.state.search) {
+    if (search) {
       persons = persons.filter(person =>
-        person.fullname.toLowerCase().indexOf(this.state.search) !== -1);
+        person.fullname.toLowerCase().indexOf(search) !== -1);
     }
 
-    if (status === 'loadList') {
+    if (loading) {
       return (
         <div>Loading...</div>
       );
@@ -51,9 +66,15 @@ class PersonsList extends Component {
 
     return (
       <div>
+        {editPerson &&
+          <EditPerson person={editPerson} handleClose={this.handleClose} />
+        }
+        {showPerson &&
+          <ShowPerson person={showPerson} handleClose={this.handleClose} />
+        }
         <div style={{ position: 'absolute', top: 56 }}>
           <Select
-            value={this.state.order}
+            value={order}
             onChange={this.handleOrder}
             name="Sortierung"
             style={{ width: 100, marginLeft: 20, marginRight: 20 }}
@@ -66,21 +87,39 @@ class PersonsList extends Component {
             id="search"
             type="search"
             margin="normal"
-            value={this.state.search}
+            value={search}
             onChange={this.handleSearch}
           />
         </div>
 
-        <List style={{ height: 'calc(100vh - 176px)', overflow: 'auto', marginTop: 60 }}>
+        <div style={{ height: 'calc(100vh - 176px)', overflow: 'auto', marginTop: 60 }}>
           {persons.map(person => (
-            <ListItem key={person.id} onClick={this.handleClick(person.id)}>
-              <ListItemAvatar>
-                <Avatar>{person.comments_count}</Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={person.name} secondary={person.email} />
-            </ListItem>
+            <Card key={person.id}>
+              <CardHeader
+                avatar={<Avatar>{person.comments_count}</Avatar>}
+                title={getPersonName(person.name, person.location_name)}
+                subheader={person.email}
+              />
+              <CardActions>
+                <Button
+                  size="small"
+                  color="primary"
+                  style={{ marginLeft: 'auto' }}
+                  onClick={this.handleEdit(person)}
+                >
+                  Bearbeiten
+                </Button>
+                <Button
+                  size="small"
+                  color="primary"
+                  onClick={this.handleShow(person)}
+                >
+                  Kommentare
+                </Button>
+              </CardActions>
+            </Card>
           ))}
-        </List>
+        </div>
       </div>
     );
   }
@@ -88,17 +127,12 @@ class PersonsList extends Component {
 
 PersonsList.propTypes = {
   persons: PropTypes.arrayOf(PropTypes.shape(PersonPropTypes.propTypes)).isRequired,
-  status: PropTypes.string.isRequired,
-  showPerson: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  persons: state.persons.data,
-  status: state.persons.status,
+  persons: state.persons.persons.data,
+  loading: state.persons.persons.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  showPerson: personId => dispatch(showPersonAction(personId)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PersonsList);
+export default connect(mapStateToProps)(PersonsList);

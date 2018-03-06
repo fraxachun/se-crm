@@ -1,4 +1,3 @@
-import { createAction } from 'redux-act';
 import { createActionAsync } from 'redux-act-async';
 import httpClient from '../httpClient';
 
@@ -11,21 +10,12 @@ const fetchPersons = createActionAsync(
 
 const savePerson = createActionAsync(
   'savePerson',
-  values => httpClient
-    .put(`/persons/${values.id}`, values)
+  (person, values) => httpClient
+    .put(`/persons/${person.id}`, values)
     .then(res => res.data),
 );
 
-const showList = createAction('showList');
-
-const showPerson = createAction('showPerson');
-
-const editPerson = createAction('editPerson');
-
 export {
   fetchPersons,
-  showList,
-  showPerson,
-  editPerson,
   savePerson,
 };

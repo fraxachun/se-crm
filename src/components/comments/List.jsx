@@ -15,20 +15,13 @@ import CommentPropTypes from './PropTypes';
 import PersonPropTypes from '../persons/PropTypes';
 import LocationPropTypes from '../locations/PropTypes';
 import AddComment from './Add';
+import getPersonName from '../util';
 
 const Comment = ({
   comment: {
     date, comment, user_name: user, location_name: location, person_name: person,
   },
 }) => {
-  let title = <div />;
-  if (person && location) {
-    title = <div>{person} (<i>{location}</i>)</div>;
-  } else if (person) {
-    title = <div>{person}</div>;
-  } else if (location) {
-    title = <div><i>{location}</i></div>;
-  }
   const words = user.split(' ');
   const avatar = words[0].substr(0, 1) + words[1].substr(0, 1);
   let color = null;
@@ -48,7 +41,7 @@ const Comment = ({
       <CardHeader
         avatar={<Avatar style={style}>{avatar}</Avatar>}
         action={<IconButton><MoreVertIcon /></IconButton>}
-        title={title}
+        title={getPersonName(person, location)}
         subheader={date}
       />
       <CardContent>
