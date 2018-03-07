@@ -8,19 +8,27 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import Select from 'material-ui/Select';
+import { MenuItem } from 'material-ui/Menu';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import Input, { InputLabel } from 'material-ui/Input';
 
 import PropTypes from './PropTypes';
 import { savePerson as savePersonAction } from '../../store/persons/actions';
+import fetchLocationsAction from '../../store/locations/actions';
 
 class EditPerson extends Component {
   constructor(props) {
     super(props);
     this.state = this.props.person;
+    if (this.props.locations.length === 0) {
+      this.props.fetchLocations();
+    }
   }
 
   handleChange = name => event =>
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value === '-' ? null : event.target.value,
     });
 
   handleSubmit = () => {
@@ -29,6 +37,16 @@ class EditPerson extends Component {
   }
 
   render() {
+    let { locations } = this.props;
+    locations.sort((a, b) => {
+      const v1 = a.name.toLowerCase();
+      const v2 = b.name.toLowerCase();
+      if (v1 < v2) return -1;
+      if (v1 > v2) return 1;
+      return 0;
+    });
+
+
     return (
       <Dialog open>
         <DialogTitle>Bearbeiten</DialogTitle>
@@ -40,6 +58,7 @@ class EditPerson extends Component {
             value={this.state.firstname}
             onChange={this.handleChange('firstname')}
             margin="normal"
+            style={{ width: 300 }}
           />
           <TextField
             required
@@ -48,6 +67,7 @@ class EditPerson extends Component {
             value={this.state.lastname}
             onChange={this.handleChange('lastname')}
             margin="normal"
+            style={{ width: 300 }}
           />
           <TextField
             required
@@ -56,7 +76,29 @@ class EditPerson extends Component {
             value={this.state.email}
             onChange={this.handleChange('email')}
             margin="normal"
+            style={{ width: 300 }}
           />
+
+          <TextField
+            required
+            select
+            id="kindergarten"
+            label="Kindergarten"
+            value={this.state.location_id ? this.state.location_id : '-'}
+            onChange={this.handleChange('location_id')}
+            margin="normal"
+            style={{ width: 300 }}
+          >
+            <MenuItem value="-">
+              -
+            </MenuItem>
+            {locations.map(location => (
+              <MenuItem key={location.id} value={location.id}>
+                {location.name}
+              </MenuItem>
+            ))}
+          </TextField>
+
         </DialogContent>
         <DialogActions>
           <Button onClick={this.props.handleClose}>
@@ -74,8 +116,13 @@ class EditPerson extends Component {
 EditPerson.propTypes = PropTypes.propTypes;
 EditPerson.defaultProps = PropTypes.defaultProps;
 
-const mapDispatchToProps = dispatch => ({
-  savePerson: (person, values) => dispatch(savePersonAction(person, values)),
+const mapStateToProps = state => ({
+  locations: state.locations.data,
 });
 
-export default connect(null, mapDispatchToProps)(EditPerson);
+const mapDispatchToProps = dispatch => ({
+  savePerson: (person, values) => dispatch(savePersonAction(person, values)),
+  fetchLocations: () => dispatch(fetchLocationsAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditPerson);

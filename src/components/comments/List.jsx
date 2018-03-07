@@ -104,7 +104,12 @@ class Comments extends Component {
           location={this.props.location}
         />
         {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
-        <Button variant="fab" color="secondary" style={style} onClick={this.handleClick}>
+        <Button
+          variant="fab"
+          color="secondary"
+          style={style}
+          onClick={this.handleClick}
+        >
           <AddIcon />
         </Button>
       </div>
