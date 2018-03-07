@@ -16,6 +16,7 @@ import PersonPropTypes from '../persons/PropTypes';
 import LocationPropTypes from '../locations/PropTypes';
 import AddComment from './Add';
 import getPersonName from '../util';
+import Loading from '../common/Loading';
 
 const Comment = ({
   comment: {
@@ -85,7 +86,7 @@ class Comments extends Component {
   render() {
     const { loading, comments } = this.props;
     if (loading) {
-      return <div>Loading...</div>;
+      return <Loading color="secondary" />;
     }
     const style = {
       position: 'fixed',

@@ -8,6 +8,7 @@ import Button from 'material-ui/Button';
 
 import LocationPropTypes from './PropTypes';
 import ShowLocation from './Show';
+import Loading from '../common/Loading';
 
 class LocationsList extends Component {
   state = {
@@ -28,10 +29,8 @@ class LocationsList extends Component {
     const { locations, loading } = this.props;
     const { currentLocation } = this.state;
 
-    if (loading || !locations) {
-      return (
-        <div>Loading...</div>
-      );
+    if (loading) {
+      return <Loading />;
     }
 
     return (
@@ -64,12 +63,8 @@ class LocationsList extends Component {
 }
 
 LocationsList.propTypes = {
-  locations: PropTypes.arrayOf(PropTypes.shape(LocationPropTypes.propTypes)),
-  loading: PropTypes.bool,
-};
-LocationsList.defaultProps = {
-  locations: [],
-  loading: true,
+  locations: PropTypes.arrayOf(PropTypes.shape(LocationPropTypes.propTypes)).isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({

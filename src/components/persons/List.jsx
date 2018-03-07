@@ -8,6 +8,9 @@ import Button from 'material-ui/Button';
 import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import TextField from 'material-ui/TextField';
+import { InputAdornment } from 'material-ui/Input';
+import SearchIcon from 'material-ui-icons/Search';
+import SwapVertIcon from 'material-ui-icons/SwapVert';
 
 import AddPerson from './Add';
 import EditPerson from './Edit';
@@ -15,6 +18,7 @@ import ShowPerson from './Show';
 import PersonPropTypes from './PropTypes';
 import getPersonName from '../util';
 import AddButton from '../common/AddButton';
+import Loading from '../common/Loading';
 
 class PersonsList extends Component {
   state = {
@@ -69,9 +73,7 @@ class PersonsList extends Component {
     }
 
     if (loading) {
-      return (
-        <div>Loading...</div>
-      );
+      return <Loading />;
     }
 
     return (
@@ -90,13 +92,19 @@ class PersonsList extends Component {
             value={order}
             onChange={this.handleOrder}
             name="Sortierung"
-            style={{ width: 100, marginLeft: 20, marginRight: 20 }}
+            style={{ width: 140, marginLeft: 20, marginRight: 20 }}
+            startAdornment={<InputAdornment position="start"><SwapVertIcon /></InputAdornment>}
           >
             <MenuItem value="email">E-Mail</MenuItem>
             <MenuItem value="firstname">Vorname</MenuItem>
             <MenuItem value="lastname">Nachname</MenuItem>
           </Select>
           <TextField
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start"><SearchIcon /></InputAdornment>
+              ),
+            }}
             id="search"
             type="search"
             margin="normal"
