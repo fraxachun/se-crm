@@ -4,13 +4,19 @@ import { connect } from 'react-redux';
 
 import LocationsList from './List';
 import fetchLocationsAction from '../../store/locations/actions';
+import AppTopBar from '../common/AppTopBar';
 
 class Controller extends Component {
   componentDidMount() {
     this.props.fetchLocations();
   }
   render() {
-    return <LocationsList />;
+    return (
+      <div>
+        <AppTopBar title="Kindergärten" />
+        <LocationsList />
+      </div>
+    );
   }
 }
 

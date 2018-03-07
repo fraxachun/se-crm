@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Dialog, {
   DialogActions,
@@ -9,29 +10,28 @@ import Dialog, {
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
-import PropTypes from './PropTypes';
-import { savePerson as savePersonAction } from '../../store/persons/actions';
+import { addPerson as addPersonAction } from '../../store/persons/actions';
 
-class EditPerson extends Component {
-  constructor(props) {
-    super(props);
-    this.state = this.props.person;
+class AddPerson extends Component {
+  state = {
+    firstname: '',
+    lastname: '',
+    email: '',
   }
-
   handleChange = name => event =>
     this.setState({
       [name]: event.target.value,
     });
 
   handleSubmit = () => {
-    this.props.savePerson(this.props.person, this.state);
+    this.props.addPerson(this.state);
     this.props.handleClose();
   }
 
   render() {
     return (
       <Dialog open>
-        <DialogTitle>Bearbeiten</DialogTitle>
+        <DialogTitle>Hinzufügen</DialogTitle>
         <DialogContent>
           <TextField
             required
@@ -71,11 +71,13 @@ class EditPerson extends Component {
   }
 }
 
-EditPerson.propTypes = PropTypes.propTypes;
-EditPerson.defaultProps = PropTypes.defaultProps;
+AddPerson.propTypes = {
+  addPerson: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = dispatch => ({
-  savePerson: (person, values) => dispatch(savePersonAction(person, values)),
+  addPerson: values => dispatch(addPersonAction(values)),
 });
 
-export default connect(null, mapDispatchToProps)(EditPerson);
+export default connect(null, mapDispatchToProps)(AddPerson);

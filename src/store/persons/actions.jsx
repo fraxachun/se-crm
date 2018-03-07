@@ -13,9 +13,31 @@ const savePerson = createActionAsync(
   (person, values) => httpClient
     .put(`/persons/${person.id}`, values)
     .then(res => res.data),
+  {
+    ok: {
+      callback: (dispatch) => {
+        dispatch(fetchPersons());
+      },
+    },
+  },
+);
+
+const addPerson = createActionAsync(
+  'savePerson',
+  (person, values) => httpClient
+    .post('/persons', values)
+    .then(res => res.data),
+  {
+    ok: {
+      callback: (dispatch) => {
+        dispatch(fetchPersons());
+      },
+    },
+  },
 );
 
 export {
   fetchPersons,
   savePerson,
+  addPerson,
 };

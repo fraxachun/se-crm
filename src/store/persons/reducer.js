@@ -1,6 +1,6 @@
 import { createReducerAsync } from 'redux-act-async';
 import { combineReducers } from 'redux';
-import { fetchPersons, savePerson } from './actions';
+import { fetchPersons } from './actions';
 
 const defaultValues = {
   loading: false,
@@ -11,5 +11,4 @@ const defaultValues = {
 
 export default combineReducers({
   persons: createReducerAsync(fetchPersons, defaultValues),
-  savePerson: createReducerAsync(savePerson, defaultValues),
 });

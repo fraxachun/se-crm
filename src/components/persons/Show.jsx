@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from './PropTypes';
 import Comments from '../comments/List';
-import Dialog from '../Dialog';
+import Dialog from '../common/FullScreenDialog';
 
 const ShowPerson = ({ person, handleClose }) => (
   <Dialog title={person.name} handleClose={handleClose}>

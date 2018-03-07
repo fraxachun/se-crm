@@ -9,10 +9,12 @@ import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
 import TextField from 'material-ui/TextField';
 
+import AddPerson from './Add';
 import EditPerson from './Edit';
 import ShowPerson from './Show';
 import PersonPropTypes from './PropTypes';
 import getPersonName from '../util';
+import AddButton from '../common/AddButton';
 
 class PersonsList extends Component {
   state = {
@@ -20,6 +22,7 @@ class PersonsList extends Component {
     search: '',
     editPerson: null,
     showPerson: null,
+    addPerson: false,
   };
 
   handleEdit = person => () =>
@@ -28,8 +31,15 @@ class PersonsList extends Component {
   handleShow = person => () =>
     this.setState({ showPerson: person });
 
+  handleAdd = () =>
+    this.setState({ addPerson: true });
+
   handleClose = () =>
-    this.setState({ editPerson: null, showPerson: null });
+    this.setState({
+      editPerson: null,
+      showPerson: null,
+      addPerson: false,
+    });
 
   handleOrder = event =>
     this.setState({ order: event.target.value });
@@ -41,7 +51,7 @@ class PersonsList extends Component {
     const { loading } = this.props;
     let { persons } = this.props;
     const {
-      order, search, editPerson, showPerson,
+      order, search, editPerson, showPerson, addPerson,
     } = this.state;
 
     persons.sort((a, b) => {
@@ -66,6 +76,9 @@ class PersonsList extends Component {
 
     return (
       <div>
+        {addPerson &&
+          <AddPerson handleClose={this.handleClose} />
+        }
         {editPerson &&
           <EditPerson person={editPerson} handleClose={this.handleClose} />
         }
@@ -120,6 +133,7 @@ class PersonsList extends Component {
             </Card>
           ))}
         </div>
+        <AddButton color="primary" onClick={this.handleAdd} />
       </div>
     );
   }

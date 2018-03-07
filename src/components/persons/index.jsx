@@ -4,13 +4,19 @@ import { connect } from 'react-redux';
 
 import PersonsList from './List';
 import { fetchPersons as fetchPersonsAction } from '../../store/persons/actions';
+import AppTopBar from '../common/AppTopBar';
 
 class Controller extends Component {
   componentDidMount() {
     this.props.fetchPersons();
   }
   render() {
-    return <PersonsList />;
+    return (
+      <div>
+        <AppTopBar title="Personen" />
+        <PersonsList />
+      </div>
+    );
   }
 }
 

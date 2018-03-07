@@ -6,7 +6,7 @@ import PersonIcon from 'material-ui-icons/Person';
 import LocationOnIcon from 'material-ui-icons/Domain';
 
 import Persons from './persons';
-import Comments from './comments/List';
+import Comments from './comments';
 import Locations from './locations';
 
 class AppTabs extends Component {
@@ -34,7 +34,7 @@ class AppTabs extends Component {
           showLabels
           style={{ position: 'fixed', bottom: 0, width: '100%' }}
         >
-          <BottomNavigationAction label="Ereignisse" icon={<RestoreIcon />} />
+          <BottomNavigationAction label="Kommentare" icon={<RestoreIcon />} />
           <BottomNavigationAction label="Personen" icon={<PersonIcon />} />
           <BottomNavigationAction label="Kindergärten" icon={<LocationOnIcon />} />
         </BottomNavigation>
