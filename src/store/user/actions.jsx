@@ -1,5 +1,6 @@
 import { createAction } from 'redux-act';
 import { createActionAsync } from 'redux-act-async';
+
 import httpClient from '../httpClient';
 
 const authenticate = createAction('authenticate');
@@ -7,8 +8,9 @@ const authenticate = createAction('authenticate');
 const login = createActionAsync(
   'login',
   (user, password) => httpClient
-    .post('/logins', { user, password })
+    .post('/login', { user, password })
     .then((res) => {
+      httpClient.defaults.headers['X-JWT'] = res.data.jwt;
       localStorage.setItem('user', res.data.jwt);
       return res.data;
     }),
@@ -17,7 +19,7 @@ const login = createActionAsync(
 const checkToken = createActionAsync(
   'checkToken',
   token => httpClient
-    .post('/logins', { token })
+    .post('/login', { token })
     .then((res) => {
       localStorage.setItem('user', res.data.jwt);
       return res.data;

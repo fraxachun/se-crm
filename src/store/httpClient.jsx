@@ -7,5 +7,6 @@ export default axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
+    'X-JWT': localStorage.getItem('user'),
   },
 });
