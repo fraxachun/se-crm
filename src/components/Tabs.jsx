@@ -25,8 +25,8 @@ class AppTabs extends Component {
       <div>
         <div style={{ height: 'calc(100vh - 104px)', overflow: 'auto', marginTop: 56 }}>
           {value === 0 && <Comments />}
-          {value === 1 && <Persons />}
-          {value === 2 && <Locations />}
+          {value === 1 && <Locations />}
+          {value === 2 && <Persons />}
         </div>
         <BottomNavigation
           value={value}
@@ -35,8 +35,8 @@ class AppTabs extends Component {
           style={{ position: 'fixed', bottom: 0, width: '100%' }}
         >
           <BottomNavigationAction label="Kommentare" icon={<RestoreIcon />} />
-          <BottomNavigationAction label="Personen" icon={<PersonIcon />} />
           <BottomNavigationAction label="Kindergärten" icon={<LocationOnIcon />} />
+          <BottomNavigationAction label="Personen" icon={<PersonIcon />} />
         </BottomNavigation>
       </div>
     );

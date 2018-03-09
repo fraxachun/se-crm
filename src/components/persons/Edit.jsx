@@ -8,10 +8,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import Select from 'material-ui/Select';
 import { MenuItem } from 'material-ui/Menu';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Input, { InputLabel } from 'material-ui/Input';
 
 import PropTypes from './PropTypes';
 import { savePerson as savePersonAction } from '../../store/persons/actions';
@@ -37,7 +34,7 @@ class EditPerson extends Component {
   }
 
   render() {
-    let { locations } = this.props;
+    const { locations } = this.props;
     locations.sort((a, b) => {
       const v1 = a.name.toLowerCase();
       const v2 = b.name.toLowerCase();

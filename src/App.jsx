@@ -7,7 +7,7 @@ import 'typeface-roboto';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import Reboot from 'material-ui/Reboot';
 
-import Tabs from './components/Tabs';
+import Init from './components/Init';
 
 import configureStore from './store';
 
@@ -35,7 +35,7 @@ const App = (config = {}) => {
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
         <Reboot />
-        <Tabs />
+        <Init />
       </MuiThemeProvider>
     </Provider>
   );
