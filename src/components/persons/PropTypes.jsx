@@ -12,6 +12,7 @@ export default {
     person: {
       firstname: '',
       lastname: '',
+      email: '',
     },
   },
 };

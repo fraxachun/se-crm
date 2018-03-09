@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Dialog, {
   DialogActions,
@@ -10,17 +11,14 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { MenuItem } from 'material-ui/Menu';
 
-import PropTypes from './PropTypes';
-import { savePerson as savePersonAction } from '../../store/persons/actions';
-import fetchLocationsAction from '../../store/locations/actions';
+import PersonPropTypes from './PropTypes';
+import LocationPropTypes from '../locations/PropTypes';
+import { savePerson as savePersonAction, addPerson as addPersonAction } from '../../store/persons/actions';
 
 class EditPerson extends Component {
   constructor(props) {
     super(props);
     this.state = this.props.person;
-    if (this.props.locations.length === 0) {
-      this.props.fetchLocations();
-    }
   }
 
   handleChange = name => event =>
@@ -29,7 +27,11 @@ class EditPerson extends Component {
     });
 
   handleSubmit = () => {
-    this.props.savePerson(this.props.person, this.state);
+    if (this.props.person.id) {
+      this.props.savePerson(this.props.person, this.state);
+    } else {
+      this.props.addPerson(this.state);
+    }
     this.props.handleClose();
   }
 
@@ -43,10 +45,11 @@ class EditPerson extends Component {
       return 0;
     });
 
+    const title = this.props.person.id ? 'Bearbeiten' : 'Hinzufügen';
 
     return (
       <Dialog open>
-        <DialogTitle>Bearbeiten</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
           <TextField
             required
@@ -81,7 +84,7 @@ class EditPerson extends Component {
             select
             id="kindergarten"
             label="Kindergarten"
-            value={this.state.location_id ? this.state.location_id : '-'}
+            value={this.state.location_id ? this.state.location_id.toString() : '-'}
             onChange={this.handleChange('location_id')}
             margin="normal"
             style={{ width: 300 }}
@@ -91,17 +94,17 @@ class EditPerson extends Component {
             </MenuItem>
             {locations.map(location => (
               <MenuItem key={location.id} value={location.id}>
-                {location.name}
+                {location.name.replace('Kindergarten', 'KG')}
               </MenuItem>
             ))}
           </TextField>
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.props.handleClose}>
+          <Button onClick={this.props.handleClose} color="primary">
             Abbrechen
           </Button>
-          <Button onClick={this.handleSubmit}>
+          <Button onClick={this.handleSubmit} color="primary">
             Speichern
           </Button>
         </DialogActions>
@@ -110,16 +113,24 @@ class EditPerson extends Component {
   }
 }
 
-EditPerson.propTypes = PropTypes.propTypes;
-EditPerson.defaultProps = PropTypes.defaultProps;
+EditPerson.propTypes = {
+  person: PersonPropTypes.propTypes.person, // eslint-disable-line react/no-typos
+  addPerson: PropTypes.func.isRequired,
+  savePerson: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  locations: PropTypes.arrayOf(LocationPropTypes.propTypes.location).isRequired,
+};
+EditPerson.defaultProps = {
+  person: PersonPropTypes.defaultProps.person,
+};
 
 const mapStateToProps = state => ({
   locations: state.locations.data,
 });
 
 const mapDispatchToProps = dispatch => ({
+  addPerson: values => dispatch(addPersonAction(values)),
   savePerson: (person, values) => dispatch(savePersonAction(person, values)),
-  fetchLocations: () => dispatch(fetchLocationsAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPerson);

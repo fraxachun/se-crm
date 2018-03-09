@@ -52,10 +52,10 @@ class AddComment extends Component {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.props.handleClose} color="primary">
+          <Button onClick={this.props.handleClose} color="secondary">
             Abbrechen
           </Button>
-          <Button onClick={this.handleSubmit} color="primary">
+          <Button onClick={this.handleSubmit} color="secondary">
             Speichern
           </Button>
         </DialogActions>

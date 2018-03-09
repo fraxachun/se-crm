@@ -23,8 +23,8 @@ const savePerson = createActionAsync(
 );
 
 const addPerson = createActionAsync(
-  'savePerson',
-  (person, values) => httpClient
+  'addPerson',
+  values => httpClient
     .post('/persons', values)
     .then(res => res.data),
   {

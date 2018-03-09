@@ -1,6 +1,8 @@
 import React from 'react';
 
-const getPersonName = (name, location) => {
+const getPersonName = (name, locationName) => {
+  let location = locationName;
+  if (location) location = location.replace('Kindergarten', 'KG');
   if (name && location) {
     return <div>{name} (<i>{location}</i>)</div>;
   } else if (name) {

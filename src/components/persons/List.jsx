@@ -12,7 +12,6 @@ import { InputAdornment } from 'material-ui/Input';
 import SearchIcon from 'material-ui-icons/Search';
 import SwapVertIcon from 'material-ui-icons/SwapVert';
 
-import AddPerson from './Add';
 import EditPerson from './Edit';
 import ShowPerson from './Show';
 import PersonPropTypes from './PropTypes';
@@ -79,7 +78,7 @@ class PersonsList extends Component {
     return (
       <div>
         {addPerson &&
-          <AddPerson handleClose={this.handleClose} />
+          <EditPerson handleClose={this.handleClose} />
         }
         {editPerson &&
           <EditPerson person={editPerson} handleClose={this.handleClose} />
