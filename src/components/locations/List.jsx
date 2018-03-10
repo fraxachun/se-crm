@@ -43,7 +43,7 @@ class LocationsList extends Component {
             <CardHeader
               avatar={<Avatar>{location.comments_count}</Avatar>}
               title={location.name}
-              subheader={location.email}
+              subheader={location.sponsor}
             />
             <CardActions>
               <Button
