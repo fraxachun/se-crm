@@ -109,6 +109,7 @@ class PersonsList extends Component {
             margin="normal"
             value={search}
             onChange={this.handleSearch}
+            style={{ width: 170 }}
           />
         </div>
 
