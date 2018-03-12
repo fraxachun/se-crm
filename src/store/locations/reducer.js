@@ -1,6 +1,7 @@
-
 import { createReducerAsync } from 'redux-act-async';
-import fetchLocations from './actions';
+import { combineReducers } from 'redux';
+
+import { fetchLocations, saveLocation } from './actions';
 
 const defaultValues = {
   loading: false,
@@ -9,4 +10,7 @@ const defaultValues = {
   error: null,
 };
 
-export default createReducerAsync(fetchLocations, defaultValues);
+export default combineReducers({
+  locations: createReducerAsync(fetchLocations, defaultValues),
+  saveLocation: createReducerAsync(saveLocation),
+});

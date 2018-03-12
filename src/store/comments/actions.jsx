@@ -1,6 +1,6 @@
 import { createActionAsync } from 'redux-act-async';
 import httpClient from '../httpClient';
-import fetchLocations from '../locations/actions';
+import { fetchLocations } from '../locations/actions';
 import { fetchPersons } from '../persons/actions';
 
 const fetchComments = createActionAsync(

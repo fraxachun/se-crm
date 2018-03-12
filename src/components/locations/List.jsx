@@ -7,13 +7,21 @@ import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 
 import LocationPropTypes from './PropTypes';
-import ShowLocation from './Show';
+import EditLocation from './Edit';
 import Loading from '../common/Loading';
+import Comments from '../comments/List';
+import FullScreenDialog from '../common/FullScreenDialog';
 
 class LocationsList extends Component {
   state = {
     currentLocation: null,
+    currentEditLocation: null,
   };
+
+  handleInfoClick = location => () =>
+    this.setState({
+      currentEditLocation: location,
+    });
 
   handleClick = location => () =>
     this.setState({
@@ -23,11 +31,12 @@ class LocationsList extends Component {
   handleClose = () =>
     this.setState({
       currentLocation: null,
+      currentEditLocation: null,
     });
 
   render() {
     const { locations, loading } = this.props;
-    const { currentLocation } = this.state;
+    const { currentLocation, currentEditLocation } = this.state;
 
     if (loading) {
       return <Loading />;
@@ -36,7 +45,14 @@ class LocationsList extends Component {
     return (
       <div>
         {currentLocation &&
-          <ShowLocation location={currentLocation} handleClose={this.handleClose} />
+          <FullScreenDialog title={currentLocation.name} handleClose={this.handleClose}>
+            <Comments location={currentLocation} />
+          </FullScreenDialog>
+        }
+        {currentEditLocation &&
+          <FullScreenDialog title={currentEditLocation.name} handleClose={this.handleClose} color="primary">
+            <EditLocation location={currentEditLocation} handleClose={this.handleClose} />
+          </FullScreenDialog>
         }
         {locations.map(location => (
           <Card key={location.id}>
@@ -50,6 +66,13 @@ class LocationsList extends Component {
                 size="small"
                 color="primary"
                 style={{ marginLeft: 'auto' }}
+                onClick={this.handleInfoClick(location)}
+              >
+                Info
+              </Button>
+              <Button
+                size="small"
+                color="primary"
                 onClick={this.handleClick(location)}
               >
                 Kommentare
@@ -68,8 +91,8 @@ LocationsList.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  locations: state.locations.data,
-  loading: state.locations.loading,
+  locations: state.locations.locations.data,
+  loading: state.locations.locations.loading,
 });
 
 export default connect(mapStateToProps)(LocationsList);

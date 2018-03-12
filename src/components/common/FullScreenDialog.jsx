@@ -8,9 +8,11 @@ import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import Typography from 'material-ui/Typography';
 
-const FullScreenDialog = ({ title, handleClose, children }) => (
+const FullScreenDialog = ({
+  title, handleClose, children, color,
+}) => (
   <Dialog fullScreen open>
-    <AppBar position="fixed" color="secondary">
+    <AppBar position="fixed" color={color}>
       <Toolbar>
         <Typography variant="title" color="inherit">
           {title}
@@ -35,6 +37,10 @@ FullScreenDialog.propTypes = {
   title: PropTypes.string.isRequired,
   handleClose: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired,
+  color: PropTypes.string,
+};
+FullScreenDialog.defaultProps = {
+  color: 'secondary',
 };
 
 export default FullScreenDialog;
