@@ -51,7 +51,33 @@ class EditLocation extends Component {
           <TextField
             required
             multiline
-            rows="5"
+            rows="2"
+            label="Adresse"
+            value={this.state.address}
+            onChange={this.handleChange('address')}
+            margin="normal"
+            style={{ width: 300 }}
+          />
+          <TextField
+            required
+            label="Telefon"
+            value={this.state.telephone}
+            onChange={this.handleChange('telephone')}
+            margin="normal"
+            style={{ width: 300 }}
+          />
+          <TextField
+            required
+            label="E-Mail"
+            value={this.state.email}
+            onChange={this.handleChange('email')}
+            margin="normal"
+            style={{ width: 300 }}
+          />
+          <TextField
+            required
+            multiline
+            rows="8"
             label="Info"
             value={this.state.facts}
             onChange={this.handleChange('facts')}

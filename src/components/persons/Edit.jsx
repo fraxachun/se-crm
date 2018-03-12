@@ -125,7 +125,7 @@ EditPerson.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  locations: state.locations.data,
+  locations: state.locations.locations.data,
 });
 
 const mapDispatchToProps = dispatch => ({
