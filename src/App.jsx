@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import 'typeface-roboto';
 
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import Reboot from 'material-ui/Reboot';
 
 import Init from './components/Init';
 
@@ -34,7 +33,6 @@ const App = (config = {}) => {
   return (
     <Provider store={store}>
       <MuiThemeProvider theme={theme}>
-        <Reboot />
         <Init />
       </MuiThemeProvider>
     </Provider>
