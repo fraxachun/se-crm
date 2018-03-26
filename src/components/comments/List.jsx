@@ -7,8 +7,6 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
 
 import { fetchComments as fetchCommentsAction } from '../../store/comments/actions';
 import CommentPropTypes from './PropTypes';
