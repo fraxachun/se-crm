@@ -7,6 +7,7 @@ import AppTopBar from './common/AppTopBar';
 import Login from './common/Login';
 import Tabs from './Tabs';
 import Loading from './common/Loading';
+import Layout from './common/Layout';
 
 class Init extends Component {
   constructor(props) {
@@ -21,16 +22,26 @@ class Init extends Component {
 
     if (status === 'checkLogin') {
       return (
-        <div>
-          <AppTopBar title="Spürnasenecke CRM" />
-          <Loading />
-        </div>
+        <Layout>
+          <div>
+            <AppTopBar title="Spürnasenecke CRM" />
+            <Loading />
+          </div>
+        </Layout>
       );
     } else if (status === 'loggedIn') {
-      return <Tabs />;
+      return (
+        <Layout>
+          <Tabs />
+        </Layout>
+      );
     }
 
-    return <Login handleSubmit={this.props.login} status={status} />;
+    return (
+      <Layout>
+        <Login handleSubmit={this.props.login} status={status} />
+      </Layout>
+    );
   }
 }
 

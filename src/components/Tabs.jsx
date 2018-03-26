@@ -23,7 +23,7 @@ class AppTabs extends Component {
 
     return (
       <div>
-        <div style={{ height: 'calc(100vh - 104px)', overflow: 'auto', marginTop: 56 }}>
+        <div style={{ minHeight: 'calc(100vh - 56px)', position: 'relative' }}>
           {value === 0 && <Comments />}
           {value === 1 && <Locations />}
           {value === 2 && <Persons />}
@@ -32,9 +32,9 @@ class AppTabs extends Component {
           value={value}
           onChange={this.handleChange}
           showLabels
-          style={{ position: 'fixed', bottom: 0, width: '100%' }}
+          style={{ position: 'sticky', bottom: 0 }}
         >
-          <BottomNavigationAction label="Kommentare" icon={<RestoreIcon />} />
+          <BottomNavigationAction label="Kommentare" icon={<RestoreIcon />} color="secondary" />
           <BottomNavigationAction label="Kindergärten" icon={<LocationOnIcon />} />
           <BottomNavigationAction label="Personen" icon={<PersonIcon />} />
         </BottomNavigation>

@@ -6,7 +6,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
 const AppTopBar = ({ title, color }) => (
-  <AppBar position="fixed" color={color}>
+  <AppBar position="sticky" color={color}>
     <Toolbar>
       <Typography variant="title" color="inherit">
         {title}

@@ -6,7 +6,6 @@ import Card, { CardActions, CardContent } from 'material-ui/Card';
 
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import AppTopBar from './AppTopBar';
 
 class Login extends Component {
   state = {
@@ -28,7 +27,6 @@ class Login extends Component {
     const { status } = this.props;
     return (
       <form onSubmit={this.handleSubmit}>
-        <AppTopBar title="Spürnasenecke CRM" />
         <Card style={{ marginTop: 100 }}>
           <CardContent>
             <Typography variant="headline" component="h2" style={{ marginBottom: 20 }}>

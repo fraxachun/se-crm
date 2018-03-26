@@ -8,27 +8,33 @@ import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import Typography from 'material-ui/Typography';
 
+import Layout from './Layout';
+
 const FullScreenDialog = ({
   title, handleClose, children, color,
 }) => (
   <Dialog fullScreen open>
-    <AppBar position="fixed" color={color}>
-      <Toolbar>
-        <Typography variant="title" color="inherit">
-          {title}
-        </Typography>
-        <IconButton
-          color="inherit"
-          onClick={handleClose}
-          aria-label="Schließen"
-          style={{ marginLeft: 'auto' }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
-    <div style={{ marginTop: 60 }}>
-      {children}
+    <div style={{ height: '100vh' }}>
+      <Layout style={{ height: '100vh' }}>
+        <div style={{ position: 'relative', height: '100vh' }}>
+          <AppBar position="sticky" color={color}>
+            <Toolbar>
+              <Typography variant="title" color="inherit">
+                {title}
+              </Typography>
+              <IconButton
+                color="inherit"
+                onClick={handleClose}
+                aria-label="Schließen"
+                style={{ marginLeft: 'auto' }}
+              >
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+          {children}
+        </div>
+      </Layout>
     </div>
   </Dialog>
 );

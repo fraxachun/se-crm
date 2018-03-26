@@ -17,6 +17,7 @@ import LocationPropTypes from '../locations/PropTypes';
 import AddComment from './Add';
 import getPersonName from '../util';
 import Loading from '../common/Loading';
+import AddButton from '../common/AddButton';
 
 const Comment = ({
   comment: {
@@ -88,30 +89,19 @@ class Comments extends Component {
     if (loading) {
       return <Loading color="secondary" />;
     }
-    const style = {
-      position: 'fixed',
-      top: 'auto',
-      left: 'auto',
-      right: 25,
-      bottom: 85,
-    };
     return (
       <div>
+        {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
         <AddComment
           open={this.state.showDialog}
           handleClose={this.hideDialog}
           person={this.props.person}
           location={this.props.location}
         />
-        {comments.map(comment => <Comment key={comment.id} comment={comment} />)}
-        <Button
-          variant="fab"
+        <AddButton
           color="secondary"
-          style={style}
           onClick={this.handleClick}
-        >
-          <AddIcon />
-        </Button>
+        />
       </div>
     );
   }

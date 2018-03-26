@@ -3,23 +3,31 @@ import React from 'react';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 
-const style = {
-  position: 'fixed',
-  top: 'auto',
-  left: 'auto',
-  right: 25,
-  bottom: 85,
-};
+import Layout from './Layout';
 
-const AddButton = props => (
-  <Button
-    variant="fab"
-    color="secondary"
-    style={style}
-    {...props}
+
+const AddButton = ({ color = 'primary', onClick }) => (
+  <div style={{
+     position: 'fixed', bottom: 0, left: 0, width: '100vw',
+   }}
   >
-    <AddIcon />
-  </Button>
+    <Layout>
+      <div style={{ position: 'relative' }}>
+        <Button
+          variant="fab"
+          color={color}
+          style={{
+            position: 'absolute',
+            bottom: '75px',
+            right: 45,
+          }}
+          onClick={onClick}
+        >
+          <AddIcon />
+        </Button>
+      </div>
+    </Layout>
+  </div>
 );
 
 export default AddButton;

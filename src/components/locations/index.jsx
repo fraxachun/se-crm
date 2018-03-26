@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import LocationsList from './List';
 import { fetchLocations as fetchLocationsAction } from '../../store/locations/actions';
-import AppTopBar from '../common/AppTopBar';
 
 class Controller extends Component {
   componentDidMount() {
@@ -12,10 +11,7 @@ class Controller extends Component {
   }
   render() {
     return (
-      <div>
-        <AppTopBar title="Kindergärten" />
-        <LocationsList />
-      </div>
+      <LocationsList />
     );
   }
 }

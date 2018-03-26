@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from 'material-ui/Dialog';
+import Card, {
+  CardActions,
+  CardContent,
+} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { MenuItem } from 'material-ui/Menu';
@@ -45,12 +44,9 @@ class EditPerson extends Component {
       return 0;
     });
 
-    const title = this.props.person.id ? 'Bearbeiten' : 'Hinzufügen';
-
     return (
-      <Dialog open>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
+      <Card>
+        <CardContent>
           <TextField
             required
             id="firstname"
@@ -99,16 +95,16 @@ class EditPerson extends Component {
             ))}
           </TextField>
 
-        </DialogContent>
-        <DialogActions>
+        </CardContent>
+        <CardActions>
           <Button onClick={this.props.handleClose} color="primary">
             Abbrechen
           </Button>
           <Button onClick={this.handleSubmit} color="primary">
             Speichern
           </Button>
-        </DialogActions>
-      </Dialog>
+        </CardActions>
+      </Card>
     );
   }
 }

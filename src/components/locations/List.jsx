@@ -11,6 +11,7 @@ import EditLocation from './Edit';
 import Loading from '../common/Loading';
 import Comments from '../comments/List';
 import FullScreenDialog from '../common/FullScreenDialog';
+import AppTopBar from '../common/AppTopBar';
 
 class LocationsList extends Component {
   state = {
@@ -44,42 +45,45 @@ class LocationsList extends Component {
 
     return (
       <div>
-        {currentLocation &&
-          <FullScreenDialog title={currentLocation.name} handleClose={this.handleClose}>
-            <Comments location={currentLocation} />
-          </FullScreenDialog>
-        }
-        {currentEditLocation &&
+        { currentEditLocation &&
           <FullScreenDialog title={currentEditLocation.name} handleClose={this.handleClose} color="primary">
             <EditLocation location={currentEditLocation} handleClose={this.handleClose} />
           </FullScreenDialog>
         }
-        {locations.map(location => (
-          <Card key={location.id}>
-            <CardHeader
-              avatar={<Avatar>{location.comments_count}</Avatar>}
-              title={location.name}
-              subheader={location.sponsor}
-            />
-            <CardActions>
-              <Button
-                size="small"
-                color="primary"
-                style={{ marginLeft: 'auto' }}
-                onClick={this.handleInfoClick(location)}
-              >
-                Info
-              </Button>
-              <Button
-                size="small"
-                color="primary"
-                onClick={this.handleClick(location)}
-              >
-                Kommentare
-              </Button>
-            </CardActions>
-          </Card>
-        ))}
+        { currentLocation &&
+          <FullScreenDialog title={currentLocation.name} handleClose={this.handleClose}>
+            <Comments location={currentLocation} />
+          </FullScreenDialog>
+        }
+        <div>
+          <AppTopBar title="Kindergärten" />
+          {locations.map(location => (
+            <Card key={location.id}>
+              <CardHeader
+                avatar={<Avatar>{location.comments_count}</Avatar>}
+                title={location.name}
+                subheader={location.sponsor}
+              />
+              <CardActions>
+                <Button
+                  size="small"
+                  color="primary"
+                  style={{ marginLeft: 'auto' }}
+                  onClick={this.handleInfoClick(location)}
+                >
+                  Info
+                </Button>
+                <Button
+                  size="small"
+                  color="secondary"
+                  onClick={this.handleClick(location)}
+                >
+                  Kommentare
+                </Button>
+              </CardActions>
+            </Card>
+          ))}
+        </div>
       </div>
     );
   }

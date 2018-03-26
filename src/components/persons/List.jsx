@@ -18,6 +18,7 @@ import PersonPropTypes from './PropTypes';
 import getPersonName from '../util';
 import AddButton from '../common/AddButton';
 import Loading from '../common/Loading';
+import FullScreenDialog from '../common/FullScreenDialog';
 
 class PersonsList extends Component {
   state = {
@@ -78,42 +79,53 @@ class PersonsList extends Component {
     return (
       <div>
         {addPerson &&
-          <EditPerson handleClose={this.handleClose} />
+          <FullScreenDialog title="Person Hinzufügen" handleClose={this.handleClose} color="primary">
+            <EditPerson handleClose={this.handleClose} />
+          </FullScreenDialog>
         }
         {editPerson &&
-          <EditPerson person={editPerson} handleClose={this.handleClose} />
+          <FullScreenDialog title={editPerson.name} handleClose={this.handleClose} color="primary">
+            <EditPerson person={editPerson} handleClose={this.handleClose} />
+          </FullScreenDialog>
         }
         {showPerson &&
-          <ShowPerson person={showPerson} handleClose={this.handleClose} />
+          <FullScreenDialog title="Details" handleClose={this.handleClose}>
+            <ShowPerson person={showPerson} handleClose={this.handleClose} />
+          </FullScreenDialog>
         }
-        <div style={{ position: 'absolute', top: 56 }}>
-          <Select
-            value={order}
-            onChange={this.handleOrder}
-            name="Sortierung"
-            style={{ width: 140, marginLeft: 20, marginRight: 20 }}
-            startAdornment={<InputAdornment position="start"><SwapVertIcon /></InputAdornment>}
-          >
-            <MenuItem value="email">E-Mail</MenuItem>
-            <MenuItem value="firstname">Vorname</MenuItem>
-            <MenuItem value="lastname">Nachname</MenuItem>
-          </Select>
-          <TextField
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start"><SearchIcon /></InputAdornment>
-              ),
-            }}
-            id="search"
-            type="search"
-            margin="normal"
-            value={search}
-            onChange={this.handleSearch}
-            style={{ width: 170 }}
-          />
+        <div style={{
+            position: 'sticky', top: 64, background: 'white', zIndex: 1200,
+          }}
+        >
+          <Card>
+            <Select
+              value={order}
+              onChange={this.handleOrder}
+              name="Sortierung"
+              style={{ width: 140, marginLeft: 20, marginRight: 20 }}
+              startAdornment={<InputAdornment position="start"><SwapVertIcon /></InputAdornment>}
+            >
+              <MenuItem value="email">E-Mail</MenuItem>
+              <MenuItem value="firstname">Vorname</MenuItem>
+              <MenuItem value="lastname">Nachname</MenuItem>
+            </Select>
+            <TextField
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start"><SearchIcon /></InputAdornment>
+                ),
+              }}
+              id="search"
+              type="search"
+              margin="normal"
+              value={search}
+              onChange={this.handleSearch}
+              style={{ width: 170 }}
+            />
+          </Card>
         </div>
 
-        <div style={{ height: 'calc(100vh - 176px)', overflow: 'auto', marginTop: 60 }}>
+        <div>
           {persons.map(person => (
             <Card key={person.id}>
               <CardHeader
@@ -132,7 +144,7 @@ class PersonsList extends Component {
                 </Button>
                 <Button
                   size="small"
-                  color="primary"
+                  color="secondary"
                   onClick={this.handleShow(person)}
                 >
                   Kommentare
@@ -141,7 +153,7 @@ class PersonsList extends Component {
             </Card>
           ))}
         </div>
-        <AddButton color="primary" onClick={this.handleAdd} />
+        <AddButton bottom="75px" onClick={this.handleAdd} />
       </div>
     );
   }
