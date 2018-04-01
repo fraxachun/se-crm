@@ -58,15 +58,6 @@ class PersonsList extends Component {
       order, search, editPerson, showPerson, addPerson,
     } = this.state;
 
-    persons.sort((a, b) => {
-      const v1 = a[order].toLowerCase();
-      const v2 = b[order].toLowerCase();
-      if (v1 < v2) return -1;
-      if (v1 > v2) return 1;
-      if (a.email.toLowerCase() < b.email.toLowerCase()) return -1;
-      if (a.email.toLowerCase() > b.email.toLowerCase()) return 1;
-      return 0;
-    });
     if (search) {
       persons = persons.filter(person =>
         person.fullname.toLowerCase().indexOf(search) !== -1);
@@ -94,7 +85,7 @@ class PersonsList extends Component {
           </FullScreenDialog>
         }
         <div style={{
-            position: 'sticky', top: 64, background: 'white', zIndex: 1200,
+            position: 'sticky', top: 56, background: 'white', zIndex: 1050,
           }}
         >
           <Card>

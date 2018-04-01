@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import Card, { CardHeader, CardContent } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Typography from 'material-ui/Typography';
 
 import { fetchComments as fetchCommentsAction } from '../../store/comments/actions';
@@ -40,7 +38,6 @@ const Comment = ({
     <Card>
       <CardHeader
         avatar={<Avatar style={style}>{avatar}</Avatar>}
-        action={<IconButton><MoreVertIcon /></IconButton>}
         title={getPersonName(person, location)}
         subheader={date}
       />
